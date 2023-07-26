@@ -12,7 +12,7 @@ export class AuthService {
     private readonly usersService: UsersService,
     private jwtService: JwtService,
     private configService: ConfigService,
-  ) {}
+  ) { }
 
   async signUp(createUserDto: CreateUserDto) {
     const saltRounds = this.configService.get('auth.saltRounds');
@@ -29,7 +29,7 @@ export class AuthService {
     }
     const saltRounds = this.configService.get('auth.saltRounds');
     const hash = await bcrypt.hash(signInDto.password, saltRounds);
-    const isMatch = await bcrypt.compare(signInDto.password, hash);
+    const isMatch = await bcrypt.compare(user.password, hash);
     if (!isMatch) {
       throw new UnauthorizedException('Invalid credential');
     }
